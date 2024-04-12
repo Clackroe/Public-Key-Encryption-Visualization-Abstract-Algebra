@@ -1,0 +1,23 @@
+{
+  "name": "publickeyencryption",
+  "version": "1.0.0",
+  "description": "An implementation of Chapter 13 of Abstract Algebra an Introduction by Thomas Hungerford.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Clackroe/PublicKeyEncryption.git"
+  },
+  "author": "Xander Cole, Precious Donker, and Aadya Maurya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Clackroe/PublicKeyEncryption/issues"
+  },
+  "homepage": "https://github.com/Clackroe/PublicKeyEncryption#readme",
+  "dependencies": {
+    "mathjs": "^12.4.1"
+  }
+}
