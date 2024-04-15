@@ -1,34 +1,9 @@
 import { gcd } from "mathjs";
 
 
-
-//e and n are public
-//d and k are private
-function encrypt(message, p, q) {
-    const n = p * q;
-    const k = (p - 1) * (q - 1);
-    const d = generateCoprime(k);
-
-    //dx = 1 mod k
-    const e = modInverse(d, k);
-
-    let numericalMessage = messageToNumber(message);
-    let chunks = splitString(numericalMessage);
-
-    let encryptedChunks = [];
-    chunks.forEach(c => {
-        encryptedChunks += (exponentialMod(parseInt(c), e, n));
-    });
-
-    return chunks.join('');
-}
-
-
-
-
 //base^exponent = x mod(n)
 //https://www.youtube.com/watch?v=C7gHx2StFi8
-function exponentialMod(base, exponent, n) {
+export function exponentialMod(base, exponent, n) {
     const bigBase = BigInt(base);
     const bigExponent = BigInt(exponent);
     const bigMod = BigInt(n);
@@ -37,10 +12,10 @@ function exponentialMod(base, exponent, n) {
     for (let i = 0n; i < bigExponent; i++) {
         result = (result * bigBase) % bigMod;
     }
-    return result;
+    return Number(result);
 }
 
-function generateCoprime(number) {
+export function generateCoprime(number) {
     let candidate = Math.floor(Math.random() * number) + 1;
     while (gcd(candidate, number) != 1) {
         candidate = (candidate % number) + 1;
@@ -48,14 +23,14 @@ function generateCoprime(number) {
     return candidate;
 }
 
-function modInverse(d, n) {
+export function modInverse(d, n) {
     for (let x = 1; x < n; x++) {
         if ((d * x) % n === 1) return x;
     }
     console.error("No Inverse Mod Exists");
 }
 
-function letterToNumber(letter) {
+export function letterToNumber(letter) {
     if (letter === ' ') {
         return '00';
     } else {
@@ -64,7 +39,7 @@ function letterToNumber(letter) {
     }
 }
 
-function numberToLetter(number) {
+export function numberToLetter(number) {
     if (number === '00') {
         return ' ';
     } else {
@@ -74,11 +49,11 @@ function numberToLetter(number) {
 }
 
 
-function messageToNumber(message) {
+export function messageToNumber(message) {
     return Array.from(message).map(c => letterToNumber(c)).join('');
 }
 
-function numberToMessage(number) {
+export function numberToMessage(number) {
     let out = '';
     number = Array.from(number);
 
@@ -94,23 +69,46 @@ function numberToMessage(number) {
 
     return out;
 };
-function splitString(message) {
+export function splitString(message, length) {
     let chunks = [];
     let chunk = '';
 
     for (let i = 0; i < message.length; i++) {
-        if (chunk.length === 4) {
+        if (chunk.length === length) {
             chunks.push(chunk);
             chunk = '';
         }
         chunk += message[i];
     }
     if (chunk.length > 0) {
-        chunks.push(chunk.padEnd(4, ' '));
+        chunks.push(chunk.padEnd(length, ' '));
     }
 
     return chunks;
 }
 
+export function isPrime(n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+
+    if (n % 2 === 0 || n % 3 === 0) return false;
+
+    let i = 5;
+    while (i * i <= n) {
+        if (n % i === 0 || n % (i + 2) === 0) return false;
+        i += 6;
+    }
+
+    return true;
+}
+
+export function generateRandomPrime(min, max) {
+    let num;
+    do {
+        num = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (!isPrime(num));
+    return num;
+}
+
 //Example From The Book
-console.log(encrypt("ITS ALL GREEK TO ME", 47, 59));
+// console.log(encrypt("ITS ALL GREEK TO ME", 47, 59));
