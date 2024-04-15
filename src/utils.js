@@ -98,7 +98,6 @@ export function isPrime(n) {
         if (n % i === 0 || n % (i + 2) === 0) return false;
         i += 6;
     }
-
     return true;
 }
 
@@ -110,5 +109,12 @@ export function generateRandomPrime(min, max) {
     return num;
 }
 
-//Example From The Book
-// console.log(encrypt("ITS ALL GREEK TO ME", 47, 59));
+export function randomEvenNumber(min, max) {
+    let num;
+    do {
+        num = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (num % 2 !== 0);
+    return num;
+
+}
+
