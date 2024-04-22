@@ -8,29 +8,26 @@ import { Encrypt } from "./src/Encrypt.js"
 // console.log(char);
 // char.forEach(c => console.log(numberToLetter(c)))
 
-let it = 4000
+const test = new Encrypt();
+console.log("Reciever: ")
+console.log(test)
+const test2 = new Encrypt();
+console.log("Hacker: ")
+console.log(test2)
 
-for (let i = 0; i < it; i++) {
-    console.log("Loading:...");
-    const test = new Encrypt();
-    // const test2 = new Encrypt();
+const toEncrypt = "HELLO PROFESSOR PAGE";
 
-    const toEncrypt = "ITS ALL GREEK TO ME";
+let encrypted = test.encrypt(toEncrypt);
 
-    let encrypted = test.encrypt(toEncrypt);
+let decrypted = test.decrypt(encrypted);
 
-    let decrypted = test.decrypt(encrypted);
+console.log(test);
+console.log("Message: " + toEncrypt);
+console.log("Encrypted: " + encrypted.toString());
+console.log("Decrypted: " + decrypted.toString());
 
-    if (toEncrypt.toString() !== decrypted.toString()) {
-        console.log(test);
-        console.log("Message: " + toEncrypt);
-        console.log("Encrypted: " + encrypted.toString());
-        console.log("Decrypted: " + decrypted.toString());
-    }
-}
-
-// let bad = test2.decrypt(encrypted);
-// console.log("Bad: " + bad);
+let bad = test2.decrypt(encrypted);
+console.log("Bad: " + bad);
 
 
 

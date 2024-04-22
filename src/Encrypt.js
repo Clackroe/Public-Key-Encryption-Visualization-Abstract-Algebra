@@ -8,7 +8,6 @@ export class Encrypt {
     constructor() {
         let p = 1, q = 1, n = 1;
 
-
         this.tokenLen = 4;
 
         let minValue = "";
@@ -42,6 +41,10 @@ export class Encrypt {
     encrypt(message) {
         let numericalMessage = messageToNumber(message + " ");
         let chunks = splitString(numericalMessage, this.tokenLen);
+
+        console.log("Numerical Rep:")
+        console.log(chunks);
+
         let encryptedChunks = [];
         chunks.forEach(c => {
             let e = exponentialMod(Number(c), this.publicKey.e, this.publicKey.n).toString().padStart(this.tokenLen, 0);
@@ -54,10 +57,15 @@ export class Encrypt {
     decrypt(numericalMessage) {
         let chunks = splitString(numericalMessage, this.tokenLen);
 
+        console.log("To Decrypt Chunks:")
+        console.log(chunks);
         let decryptedChunks = [];
         chunks.forEach(c => {
             decryptedChunks.push(exponentialMod(c, this.privateKey.d, this.publicKey.n).toString().padStart(this.tokenLen, 0));
         });
+
+        console.log("Decrypted Chunks:")
+        console.log(decryptedChunks);
 
         let decryptedNumber = decryptedChunks.join('');
 
